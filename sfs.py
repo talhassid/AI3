@@ -1,6 +1,3 @@
-import csv
-from typing import List
-
 def sfs(x, y, k, clf, score):
     """
     :param x: feature set to be trained using clf. list of lists.
@@ -20,6 +17,7 @@ def sfs(x, y, k, clf, score):
         features_not = list(set(features_not) - set([feature]))
     return selected_features
 
+
 def select_feature(score, clf, data, features, selected_features, labels):
     max_score = 0
     max_f = features[0]
@@ -31,22 +29,7 @@ def select_feature(score, clf, data, features, selected_features, labels):
             max_f = f
     return max_f
 
-def load_data(path: str) -> List[int]:
-    """
-    Load the dataset and return as a list
-
-    :param path:  path to the flare.csv
-    :return: the features per example and it's label
-    """
-    with open(path, 'r') as f:
-        data = list(csv.reader(f, delimiter=","))
-        for e in range(1, len(data[1:]) + 1):
-            for f in range(len(data[e]) - 1):
-                data[e][f] = int(data[e][f])
-            data[e][-1] = (data[e][-1] == "True")
-    return data[1:]
 
 def score(clf, features, labels) -> float:
     clf.fit(features, labels)
     return clf.score(features, labels)
-
