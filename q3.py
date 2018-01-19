@@ -1,8 +1,5 @@
 import csv
 from typing import List
-
-from sklearn.metrics import confusion_matrix
-from sklearn.model_selection import cross_val_score
 from sklearn.tree import DecisionTreeClassifier
 
 
@@ -35,5 +32,3 @@ if __name__ == '__main__':
     clf_underfitting = DecisionTreeClassifier(criterion="entropy", min_samples_leaf=20, min_samples_split=20)
     clf_underfitting.fit(X=data_[:318], y=labels_[:318])
     print(clf_underfitting.score(X=data_[:318], y=labels_[:318]))
-
-
