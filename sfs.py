@@ -1,10 +1,6 @@
 import csv
 from typing import List
 
-import sklearn
-from sklearn.neighbors import KNeighborsClassifier
-
-
 def sfs(x, y, k, clf, score):
     """
     :param x: feature set to be trained using clf. list of lists.
@@ -23,7 +19,6 @@ def sfs(x, y, k, clf, score):
         selected_features.append(feature)
         features_not = list(set(features_not) - set([feature]))
     return selected_features
-
 
 def select_feature(score, clf, data, features, selected_features, labels):
     max_score = 0
@@ -54,27 +49,4 @@ def load_data(path: str) -> List[int]:
 def score(clf, features, labels) -> float:
     clf.fit(features, labels)
     return clf.score(features, labels)
-
-
-path = "./flare.csv"
-data = load_data(path)
-data_ = [row[:-1] for row in data[1:]]
-labels_ = [row[-1] for row in data[1:]]
-
-
-KNN = KNeighborsClassifier(n_neighbors=5)
-KNN.fit(X=data_[:318], y=labels_[:318])
-train_acc = KNN.score(X=data_[:318], y=labels_[:318])
-test_acc = KNN.score(X=data_[319:], y=labels_[319:])
-print("Train accuracy {}".format(train_acc))
-print("Test accuracy {}".format(test_acc))
-
-features = sfs(x=data_[:318], y=labels_[:318], k=8, clf=KNN, score=score)
-filtered_data = [[row[ind] for ind in features] for row in data_[:318]]
-KNN.fit(X=filtered_data, y=labels_[:318])
-train_acc_sfs = KNN.score(X=filtered_data, y=labels_[:318])
-test_acc_sfs = KNN.score(X=[[row[ind] for ind in features] for row in data_[319:]], y=labels_[319:])
-print("\nTrain accuracy {}".format(train_acc_sfs))
-print("Test accuracy {}".format(test_acc_sfs))
-
 

@@ -1,5 +1,7 @@
 import csv
 from typing import List
+
+from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 
 
@@ -25,10 +27,11 @@ if __name__ == '__main__':
     data_ = [row[:-1] for row in data[1:]]
     labels_ = [row[-1] for row in data[1:]]
 
+    x_train, x_test, y_train, y_test = train_test_split(data_, labels_, test_size=0.25)
     clf_overfitting = DecisionTreeClassifier(criterion="entropy", min_samples_leaf=1, min_samples_split=2)
-    clf_overfitting.fit(X=data_[:318], y=labels_[:318])
-    print(clf_overfitting.score(X=data_[:318], y=labels_[:318]))
+    clf_overfitting.fit(X=x_train, y=y_train)
+    print(clf_overfitting.score(X=x_train, y=y_train))
 
     clf_underfitting = DecisionTreeClassifier(criterion="entropy", min_samples_leaf=20, min_samples_split=20)
-    clf_underfitting.fit(X=data_[:318], y=labels_[:318])
-    print(clf_underfitting.score(X=data_[:318], y=labels_[:318]))
+    clf_underfitting.fit(X=x_train, y=y_train)
+    print(clf_underfitting.score(X=x_train, y=y_train))
