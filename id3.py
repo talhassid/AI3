@@ -1,5 +1,3 @@
-from typing import List
-
 import numpy as np
 
 
@@ -47,14 +45,15 @@ class id3:
         features_ = features
         features_list = {}
         for i in range(len(features)):
-            selected_feature = self.select_feature(features_, E) # chose the feature with the highest IG
-            features_ = list(set(features_) - set([selected_feature]))  #remove the selected_feature from the features group
-            features_list.update({selected_feature:0})
-            Ve = [e[selected_feature] for e in E] #devide the examples by the selected_feature value
+            selected_feature = self.select_feature(features_, E)  # chose the feature with the highest IG
+            features_ = list(
+                set(features_) - set([selected_feature]))  # remove the selected_feature from the features group
+            features_list.update({selected_feature: 0})
+            Ve = [e[selected_feature] for e in E]  # devide the examples by the selected_feature value
             set_V = set(Ve)
             entropy = 1
             Ev_min = []
-            for v in set_V: # select the example group with the minimum entropy
+            for v in set_V:  # select the example group with the minimum entropy
                 Ev = [e for e in E if e[selected_feature] == v]
                 entropy_Ev = self.entropy(Ev)
                 if entropy_Ev <= entropy:
@@ -62,6 +61,6 @@ class id3:
                     Ev_min = Ev
                     features_list[selected_feature] = Ev_min[0][selected_feature]
 
-            if entropy == 0 or entropy ==1:
+            if entropy == 0 or entropy == 1:
                 break
         return features_list

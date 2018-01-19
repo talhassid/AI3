@@ -11,9 +11,9 @@ dt = DecisionTreeClassifier(criterion="entropy")
 dt.fit(X=x_train, y=y_train)
 
 print("Decision Tree")
-print("{} {}".format(dt.score(X=x_train, y=y_train), dt.score(X=x_test, y=y_test)))
+print("train {} test {}".format(dt.score(X=x_train, y=y_train), dt.score(X=x_test, y=y_test)))
 dt_p = DecisionTreeClassifier(criterion="entropy", min_samples_leaf=20)
 dt_p.fit(X=x_train, y=y_train)
 
 print("Decision Tree with Pruning")
-print("{} {}".format(dt_p.score(X=x_train, y=y_train), dt_p.score(X=x_test, y=y_test)))
+print("train {} test {}".format(dt_p.score(X=x_train, y=y_train), dt_p.score(X=x_test, y=y_test)))
